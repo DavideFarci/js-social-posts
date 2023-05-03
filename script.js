@@ -40,7 +40,7 @@ posts.forEach((element) => {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <a class="like-button  js-like-button" href="" data-postid="1">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
@@ -52,3 +52,27 @@ posts.forEach((element) => {
         </div>            
     </div>`
 });
+
+//Milestone 3:
+//Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
+
+//seleziono il bottone di like per aggiungere un evento al click e l'icona che deve cambiare colore
+//dentro la funzione 
+
+const btnLikes = document.querySelector(".like-button");
+const iconLikes = document.querySelector(".like-button__icon");
+
+
+btnLikes.addEventListener("click",
+    function() {
+        iconLikes.classList.toggle("like-button--liked");
+        let counterLikes = document.querySelector(".js-likes-counter");
+        if (iconLikes.classList.contains('like-button--liked')) {
+            counterLikes.innerHTML++;
+            console.log(counterLikes);
+        } else if (!iconLikes.classList.contains('like-button--liked')) {
+            counterLikes.innerHTML--;
+            console.log(counterLikes);
+        }
+    }
+);
