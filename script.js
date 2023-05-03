@@ -40,7 +40,7 @@ posts.forEach((element) => {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="" data-postid="1">
+                    <a class="like-button  js-like-button" href="javascript:void(0)" data-postid="1">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
@@ -55,24 +55,36 @@ posts.forEach((element) => {
 
 //Milestone 3:
 //Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
+//Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
 
 //seleziono il bottone di like per aggiungere un evento al click e l'icona che deve cambiare colore
 //dentro la funzione 
 
-const btnLikes = document.querySelector(".like-button");
-const iconLikes = document.querySelector(".like-button__icon");
 
+const eleLikeButtons = document.querySelectorAll(".like-button");
+const eleCounters = document.querySelectorAll(".js-likes-counter");
+const postsHistory = [];
 
-btnLikes.addEventListener("click",
-    function() {
-        iconLikes.classList.toggle("like-button--liked");
-        let counterLikes = document.querySelector(".js-likes-counter");
-        if (iconLikes.classList.contains('like-button--liked')) {
-            counterLikes.innerHTML++;
-            console.log(counterLikes);
-        } else if (!iconLikes.classList.contains('like-button--liked')) {
-            counterLikes.innerHTML--;
-            console.log(counterLikes);
+eleLikeButtons.forEach((eleLike, i) => {
+    const eleCounter = eleCounters[i];
+
+    eleLike.addEventListener("click", () => {
+        if (eleLike.classList.contains("like-button--liked")) {
+            posts[i].likes -= 1;
+            postsHistory.pop(`${posts[i].id}`);
+            console.log(postsHistory);
+        } else {
+            posts[i].likes += 1;
+            postsHistory.push(`${posts[i].id}`);
+            console.log(postsHistory);
         }
-    }
-);
+
+        eleLike.classList.toggle("like-button--liked");
+        eleCounter.innerHTML = `${posts[i].likes}`;
+
+    });
+});
+
+
+
+
